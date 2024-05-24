@@ -16,7 +16,7 @@ catch error
 
 
 transferfile = (file) ->
-  console.log("scp")
+  console.log("scp #{file} #{config.host}:/opt/#{config.appName}/tmp/.")
   spawnSync("scp #{file} #{config.host}:/opt/#{config.appName}/tmp/.")
 
 
