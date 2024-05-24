@@ -16,8 +16,9 @@ catch error
 
 
 transferfile = (file) ->
-  console.log("scp #{file} #{config.host}:/opt/#{config.appName}/tmp/.")
-  spawnSync("scp #{file} #{config.host}:/opt/#{config.appName}/tmp/.")
+  foreach server of config.servers
+  console.log("scp #{file} #{server.host}:/opt/#{config.appName}/tmp/.")
+  spawnSync("scp #{file} #{server.host}:/opt/#{config.appName}/tmp/.")
 
 
 remoteConfig = ->
