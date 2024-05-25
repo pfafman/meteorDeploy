@@ -40,5 +40,5 @@ servers=`echo $config | jq -r '.servers.[].host'`
 for server in "${servers[@]}"
 do
 	echo "\tscp $buildLocaltion/bundle.tar.gz $server:/opt/$appName/tmp/."
-	scp $buildLocaltion/bundle.tar.gz $server:/opt/$appName/tmp/.
+	scp $buildLocaltion/app.tar.gz $server:/opt/$appName/tmp/.
 done
