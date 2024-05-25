@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# Read mup.json rile
+echo ""
 
+echo "Reading mup.json file ..."
 config=`cat mup.json | grep -v "//"`
 
 
@@ -24,7 +25,7 @@ currentDir=`pwd`
 
 cd $appDir
 
-echo " Running: $buildCmd"
+echo " Running: $buildCmd ..."
 echo ""
 
 $buildCmd
@@ -32,10 +33,12 @@ $buildCmd
 echo "cd $currentDir"
 cd $currentDir
 
+echo ""
+
 servers=`echo $config | jq -r '.servers.[].host'`
 
 for server in "${servers[@]}"
 do
-	echo "scp $buildLocaltion $server:/opt/$appName/tmp/."
-	scp $buildLocaltion/bundle.gz $server:/opt/$appName/tmp/.
+	echo "scp $buildLocaltion/bundle.tar.gz $server:/opt/$appName/tmp/."
+	scp $buildLocaltion/bundle.tar.gz $server:/opt/$appName/tmp/.
 done
