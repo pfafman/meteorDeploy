@@ -16,9 +16,9 @@ catch error
 
 
 transferfile = (file) ->
-  foreach server of config.servers
-  console.log("scp #{file} #{server.host}:/opt/#{config.appName}/tmp/.")
-  spawnSync("scp #{file} #{server.host}:/opt/#{config.appName}/tmp/.")
+  for server of config.servers
+    console.log("scp #{file} #{server.host}:/opt/#{config.appName}/tmp/.")
+    spawnSync("scp #{file} #{server.host}:/opt/#{config.appName}/tmp/.")
 
 
 remoteConfig = ->
@@ -52,18 +52,26 @@ try
   console.log("Building ...")
   console.log("\t #{buildCmd}")
 
-  meteor = spawnSync(exec, args, options)
-  
-  transferfile(buildLocaltion)
+  meteor = spawn(exec, args, options)
 
-  remoteConfig()
+  meteor.stdout.setEncoding('utf8')
+  meteor.stdout.on 'data', (data) ->
+    console.log(data)
+
+  meteor.stderr.setEncoding('utf8')
+  meteor.stderr.on 'data', (data) ->
+    console.log(data)
+
+
+  meteor.on 'close', ->
+    transferfile(buildLocaltion)
+
+  #remoteConfig()
 
 catch error
   console.log("Error building app", error)
 
 
-finally
-  console.log("Done")
 
 
 
