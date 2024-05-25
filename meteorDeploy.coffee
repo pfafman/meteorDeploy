@@ -3,7 +3,7 @@
 fs        = require('fs')
 cjson     = require('cjson')
 moment    = require('moment')
-spawnSync = require('child_process').spawnSync
+spawn = require('child_process').spawnSync
 
 try
   config = cjson.load("mup.json")
@@ -48,9 +48,10 @@ try
 
   options =
     cwd: config.app
+    shell: true
 
   console.log("Building ...")
-  console.log("\t #{buildCmd}")
+  console.log("\t #{buildCmd}\n")
 
   meteor = spawn(exec, args, options)
 
