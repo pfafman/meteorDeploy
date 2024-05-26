@@ -48,7 +48,7 @@ do
 	for key in "${keys[@]}"
 	do
 		val=`echo $env | jq ".$key"`
-		echo "$key: $val" >> $buildLocaltion/env.sh
+		echo "$key=$val" >> $buildLocaltion/env.sh
 	done
 	echo -n "METEOR_SETTINGS=" >> $buildLocaltion/env.sh
 	cat settings.json >> $buildLocaltion/env.sh
