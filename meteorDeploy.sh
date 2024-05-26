@@ -22,7 +22,6 @@ scriptDir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 
 if [ "$1" != "-d" ]; then 
-	echo "cd $appDir"
 	cd $appDir
 	echo ""
 	echo "$buildCmd ..."
