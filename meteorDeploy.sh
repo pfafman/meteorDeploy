@@ -61,6 +61,12 @@ do
 
 	port=`echo $env | jq -r '.PORT'`
 	
+	if test -f "preInstallScript"; then
+  		echo "Running preInstallScript"
+  		ssh $host 'bash -s' < preInstallScript
+	fi
+
+
 	# Run installer on remote
 	echo "Install on $host $port"
 	echo ""
@@ -84,17 +90,30 @@ do
 	    echo "Checking $appName on port:$port";
 	    if curl localhost:$port 2>/dev/null >/dev/null; then
     		echo "Server online";
+    		echo "Clean Up"
+    		sudo rm -rf old_app;
+	    	sudo rm -rf old_config;
     	else
     		echo "Server offline";
+    		echo "Revert to previous version"
+    		sudo mv old_app app;
+    		sudo mv old_config config;
+    		sudo service $appName restart;
 		fi
 END
 	)
 
 	ssh $host $remoteCmd
 
+	if test -f "postInstallScript"; then
+  		echo "Running postInstallScript"
+  		ssh $host 'bash -s' < postInstallScript
+	fi
+
 done
 
 if [ "$1" != "-s" ]; then
 	echo "Clean Up"
+	rm -rf $buildLocaltion
 fi 
 
