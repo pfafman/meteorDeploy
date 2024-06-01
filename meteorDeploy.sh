@@ -84,6 +84,7 @@ do
 	    sudo mv tmp/bundle app;
 	    sudo mv tmp/env.sh config/.;
 	    cd app/programs/server && sudo npm install;
+	    cd ../../..;
 	    echo "Restarting $appName";
 	    sudo service $appName restart;
 	    sleep 5;
@@ -96,6 +97,8 @@ do
     	else
     		echo "Server offline";
     		echo "Revert to previous version"
+    		sudo rm -rf app;
+	    	sudo rm -rf config;
     		sudo mv old_app app;
     		sudo mv old_config config;
     		sudo service $appName restart;
