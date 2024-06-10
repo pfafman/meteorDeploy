@@ -52,7 +52,7 @@ do
 	done
 	echo "" >> $buildLocaltion/env.sh
 	echo "read -d '\n' METEOR_SETTINGS << EOF" >> $buildLocaltion/env.sh
-	cat settimgs.json >> $buildLocaltion/env.sh
+	cat settings.json >> $buildLocaltion/env.sh
 	echo "EOF" >> $buildLocaltion/env.sh
 	echo "" >> $buildLocaltion/env.sh
 	echo ""
