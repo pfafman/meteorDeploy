@@ -50,8 +50,10 @@ do
 		val=`echo $env | jq ".$key"`
 		echo "$key=$val" >> $buildLocaltion/env.sh
 	done
-	echo -n "METEOR_SETTINGS=" >> $buildLocaltion/env.sh
-	cat settings.json >> $buildLocaltion/env.sh
+	echo "" >> $buildLocaltion/env.sh
+	echo "read -d '\n' METEOR_SETTINGS << EOF" >> $buildLocaltion/env.sh
+	cat settimgs.json >> $buildLocaltion/env.sh
+	echo "EOF" >> $buildLocaltion/env.sh
 	echo "" >> $buildLocaltion/env.sh
 	echo ""
 	cat $buildLocaltion/env.sh
