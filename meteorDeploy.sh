@@ -84,7 +84,7 @@ do
 	    sudo mv app old_app;
 	    sudo cp -r config old_config;
 	    sudo mv tmp/bundle app;
-	    sudo mv tmp/env.sh config/.;
+	    sudo cp tmp/env.sh config/.;
 	    cd app/programs/server && sudo npm install;
 	    cd ../../..;
 	    echo "Restarting $appName";
