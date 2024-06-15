@@ -51,9 +51,8 @@ do
 		echo "$key=$val" >> $buildLocaltion/env.sh
 	done
 	echo "" >> $buildLocaltion/env.sh
-	echo "read -d '\n' METEOR_SETTINGS << EOF" >> $buildLocaltion/env.sh
-	cat settings.json >> $buildLocaltion/env.sh
-	echo "EOF" >> $buildLocaltion/env.sh
+	settings=`cat settings.json`
+	echo 'METEOR_SETTINGS='$settings >> $buildLocaltion/env.sh
 	echo "" >> $buildLocaltion/env.sh
 	echo ""
 	cat $buildLocaltion/env.sh
