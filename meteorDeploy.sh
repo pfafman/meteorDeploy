@@ -86,18 +86,24 @@ do
 	    sudo cp tmp/env.sh config/.;
 	    cd app/programs/server && sudo npm install;
 	    cd ../../..;
+	    echo "Fix ownership";
+	    sudo chown -R meteoruser app;
 	    echo "Restarting $appName";
 	    sudo service $appName restart;
-	    sleep 5;
-	    echo "Checking $appName on port:$port";
+	    echo "Sleep 10";
+	    /usr/bin/sleep 10;
+	    echo "";
+	    echo -e "Checking $appName on port:$port";
 	    if curl localhost:$port 2>/dev/null >/dev/null; then
-    		echo "Server online";
-    		echo "Clean Up"
+    		echo -e "   Server online";
+    		echo -e "";
+    		echo -e "Clean up on remote";
     		sudo rm -rf old_app;
 	    	sudo rm -rf old_config;
     	else
-    		echo "Server offline";
-    		echo "Revert to previous version"
+    		echo -e "  Server offline";
+    		echo -e "";
+    		echo -e "Revert to previous version";
     		sudo rm -rf app;
 	    	sudo rm -rf config;
     		sudo mv old_app app;
@@ -107,6 +113,8 @@ do
 END
 	)
 
+	echo "Run command on $host"
+	echo $remoteCmd
 	ssh $host $remoteCmd
 
 	if test -f "postInstallScript"; then
@@ -116,8 +124,16 @@ END
 
 done
 
-if [ "$1" != "-s" ]; then
-	echo "Clean Up"
+if [ "$1" == "-d" ]; then 
+
+	echo "Deploy Only, no build clean up"; 
+
+elif [ "$1" != "-s" ]; then
+
+	echo "Clean up local"
 	rm -rf $buildLocaltion
+
 fi 
+
+echo ""
 
